@@ -1,24 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useContext } from "react";
+import "./App.css";
+import Main from "./components/Main";
+import AuthContext from "./context/AuthContext";
+import { signInWithGoogle, signOut, storage } from "./firebaseConfig";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 
 function App() {
+  const { account } = useContext(AuthContext);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {account ? (
+        <button onClick={signOut}>Sign out</button>
+      ) : (
+        <button onClick={signInWithGoogle}>Sign in</button>
+      )}
+      {!account && (
+        <div>
+          <p>
+            Please log in to access Terra Beans! If you do not have a google
+            account you will need one.
+          </p>
+        </div>
+      )}
+      <Router>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
