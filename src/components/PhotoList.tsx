@@ -9,11 +9,19 @@ interface Props {
 
 const PhotoList = ({ pic }: Props) => {
   const { account } = useContext(AuthContext);
+  const isVideo = (pic: any): boolean => {
+    console.log(pic);
+    return pic.url.match(/\.mov/i);
+  };
   return (
     <li className="PhotoList">
       <p>{pic.title}</p>
 
-      <img src={pic.url} alt="uploaded photo" />
+      {isVideo(pic) ? (
+        <video src={pic.url} height={340} controls></video>
+      ) : (
+        <img src={pic.url} alt="uploaded photo" />
+      )}
     </li>
   );
 };

@@ -11,6 +11,13 @@ export const getAccounts = async (): Promise<Account[]> => {
     })
     .then((response) => response.data);
 };
+export const getAccountsByYear = async (year: string): Promise<Account[]> => {
+  return await axios
+    .get(`${baseUrl}/home/year`, {
+      params: { year },
+    })
+    .then((response) => response.data);
+};
 
 export const createAccount = async (account: Account): Promise<Account> => {
   return await axios

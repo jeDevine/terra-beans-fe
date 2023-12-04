@@ -9,6 +9,8 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import YearPhotos from "./components/YearPhotos";
+import Header from "./components/Header";
 
 function App() {
   const { account } = useContext(AuthContext);
@@ -29,8 +31,10 @@ function App() {
         </div>
       )}
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<Main />} />
+          <Route path="/year/:year" element={<YearPhotos />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

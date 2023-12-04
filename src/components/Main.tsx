@@ -1,5 +1,6 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { FormEvent, useContext, useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import { signInWithGoogle, signOut, storage } from "../firebaseConfig";
 import Account from "../models/accounts";
@@ -17,6 +18,7 @@ const Main = () => {
     current.getMonth() + 1
   }/${current.getFullYear()}`;
   console.log(date);
+  let currentYear = date.slice(-4);
 
   const { account } = useContext(AuthContext);
 
@@ -60,18 +62,21 @@ const Main = () => {
             <button onClick={() => setOpenForm(true)}>Add Photo</button>
           )}
           {openForm && (
-            <form onSubmit={handleSubmit} ref={clearForm}>
-              <label htmlFor="title">Title:</label>
-              <input
-                type="text"
-                name="title"
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-              <input ref={fileInputRef} type="file" />
-              <button>submit</button>
-            </form>
+            <>
+              <form onSubmit={handleSubmit} ref={clearForm}>
+                <label htmlFor="title">Title:</label>
+                <input
+                  type="text"
+                  name="title"
+                  id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <input ref={fileInputRef} type="file" />
+                <button>submit</button>
+              </form>
+              <button onClick={() => setOpenForm(false)}>close</button>
+            </>
           )}
           <ul>
             {accountList.map((account) =>
